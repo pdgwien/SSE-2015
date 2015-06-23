@@ -1,0 +1,14 @@
+This service needs two daemons to run:
+
+- forum_lighttpd (start|stop)
+- forum_gunicorn (start|stop)
+
+Both daemons need to run, but only forum_gunicorn needs to be restarted to adopt changes in the source files.
+
+The file requirements.txt is only needed if you want to install the necessary requirements for python on your local machine.
+You can install these packages with python-pip.
+
+The folder pypi/ holds all the required packages for an offline install.
+
+schema.sql is the SQL scheme of the implemented database table.
+

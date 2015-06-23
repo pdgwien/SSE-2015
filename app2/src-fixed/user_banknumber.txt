@@ -1,0 +1,2 @@
+admin|5000
+hacker|6666

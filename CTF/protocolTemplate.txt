@@ -1,0 +1,189 @@
+###############################################################################
+#                             Protokoll fuer CTF                              #
+###############################################################################
+
+Informationen zum Protokoll: 
+Das Protokoll ist verpflichtend abzugeben. Das Protokoll dient als Grundlage
+fuer Ihre Bewertung fuer die Uebung der VU. Beginnen Sie daher rechtzeitig mit
+dem Verfassen des Protokolls!
+
+Hinweise: 
+* Beschreiben Sie alle Fehler, welche Sie bei den Services gefunden haben. 
+* Erklaeren Sie auch wie Sie diese Fehler behoben haben.
+* Sollten Sie zwar Fehler finden, aber diese nicht beheben koennen, beschreiben 
+  Sie die gefundenen Stellen und was Sie machen muessten, um den Fehler zu 
+  beheben. 
+* Es koennen an unterschiedlichen Stellen Schwachstellen oder schlechte/falsche
+  Konfigurationen vorhanden sein. Wenn Sie diese finden, dokumentieren Sie 
+  diese, unabhaengig, ob diese ausnutzbar sind oder nicht.
+* Dokumentieren Sie kreative Ideen, um Angriffe/Abwehr/usw. durchzufuehren. Es 
+  ist wichtig, diese zu beschreiben, unabhaengig, ob Sie diese auch 
+  umgesetzt haben. 
+  z.B.: automatisierte Angriffe, Ausnutzen von Schwachstellen in Service A, um 
+        Flags von Service B zu erhalten, ...
+* Beschreiben Sie die durchgefuehrten Angriffe. Wenn ein Angriff nicht 
+  erfolgreich war, sollte dieser trotzdem dokumentiert werden. Es gibt
+  gegebenenfalls auch dafuer Punkte! Erklaeren Sie dann den versuchten Weg und
+  die aufgetretenen Fehler.
+* Wenn Sie zusaetzliche Dateien, wie zum Beispiel Source Code, Screenshots, usw
+  abgeben moechten, verweisen (Dateiname) Sie darauf in diesem Dokument und 
+  geben Sie diese zusammen mit dem Protokoll in einem Archiv (ZIP, Tar, usw.) 
+  ab.
+* Weitere Informationen zur Bewertung finden Sie auch in den CTF-Informationen
+  und Regeln in tuwel im Abschnitt zum CTF-Contest.
+
+###############################################################################
+# Team
+###############################################################################
+
+Teamname: TODO
+
+-------------------------------------------------------------------------------
+   Matrikelnummer, Vorname, Nachname
+-------------------------------------------------------------------------------
+1: TODO
+2: TODO
+3: TODO
+4: TODO
+5: TODO
+-------------------------------------------------------------------------------
+
+
+###############################################################################
+# Service Newsletter
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+TODO
+
+
+###############################################################################
+# Service EsseCoin
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+TODO
+
+
+###############################################################################
+# Service CCValidation
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+TODO
+
+
+###############################################################################
+# Service keepmesecret
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+TODO
+
+
+###############################################################################
+# Service Shoppinglist
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+TODO
+
+
+###############################################################################
+# Service Forum
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+TODO
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+TODO
+
+
+###############################################################################
+# Sonstige Anmerkungen
+#
+# Saemtliche Anmerkungen im Zusammenhang mit dem CTF. Dieser Teil wird nicht
+# fuer die Bewertung verwendet. Feedback hilft uns diese Veranstaltung fuer
+# kommende Semester zu verbessern.
+# 
+###############################################################################
+TODO
+
+
+###############################################################################
+# Referenzen
+#
+# Referenzen auf verwendete Sourcen wie Tutorials, Web Seiten, ...
+###############################################################################
+[1] http://www.todo.at
+TODO

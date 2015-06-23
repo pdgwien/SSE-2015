@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+{% block body %}
+  <div class="searchbar">
+    <form action="{{ url_for('search') }}" method="POST">
+      <input type="text" name="search">
+      <input type="submit" value="Search">
+    </form>
+  </div>
+  <h1>Search result</h1>
+  <ul>
+    {% for user in users %}
+    <li>{{ user }}</li>
+    {% else %}
+    <li>Nothing found.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

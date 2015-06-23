@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% block body %}
+  <h1>User details</h1>
+  {% if user %}
+  <dl>
+    <dt>&gt; Username:
+    <dd>{{ user[0] }}
+    <dt>&gt; Your current password:
+    <dd class="spoiler">{{ user[1] }}
+  </dl>
+  {% else %}
+  <p>Something went wrong</p>
+  {% endif %}
+{% endblock %}

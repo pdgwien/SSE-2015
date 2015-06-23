@@ -1,0 +1,71 @@
+IT'S SHOWTIME
+
+declareInt terminator
+setInitialValue @false
+VariableFromMethod terminator
+CallMethod
+readInt
+print "thx"
+
+declareInt sarah
+setInitialValue @false
+
+declareInt connor
+setInitialValue @false
+
+declareInt killcount
+setInitialValue @true
+
+declareInt isAKiller setInitialValue @true
+while terminator
+    VariableFromMethod sarah = CallMethod readInt
+    print "thx"
+    VariableFromMethod connor = CallMethod readInt
+    print "thx"
+    
+    if isAKiller
+      VariableFromMethod isAKiller
+      CallMethod KillThemWithFire terminator sarah connor killcount
+      
+      assignVariable killcount SetValue killcount * 16384
+    end
+    
+    VariableFromMethod terminator = CallMethod readInt
+    print "thx"
+end
+
+YOU HAVE BEEN TERMINATED
+
+function KillThemWithFire
+      argument a
+      argument b
+      argument c
+      argument killcount
+      NonVoidMethod
+  declareInt d setInitialValue @false 
+  declareInt e setInitialValue @false 
+  declareInt f setInitialValue @false 
+  declareInt g setInitialValue @false 
+
+  assignVariable d SetValue a + c * b
+  assignVariable e SetValue b * d + c/ 2
+  assignVariable f SetValue a - b * e
+  assignVariable g SetValue c - a
+  
+  declareInt kyle
+  setInitialValue @false
+  assignVariable kyle SetValue f > g
+  
+  print d
+  print f
+  
+  if kyle
+    print e
+  else
+    print g
+  end
+  
+  assignVariable kyle SetValue killcount > @false
+  
+  return kyle  
+end

@@ -1,0 +1,37 @@
+<!doctype html>
+<head>
+  <title>Forum</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="topnav">
+    <ul>
+      {% if not session.user_id %}
+      <li><a href="{{ url_for('register') }}">Register</a></li>
+      <li><a href="{{ url_for('login') }}">Login</a></li>
+      {% else %}
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="branding">
+    ESSE FORUM
+  </div>
+  {% if session.user_id %}
+  <div class="nav">
+    <ul>
+      <li><a href="{{ url_for('forum') }}">Forum</a></li>
+      <li><a href="{{ url_for('details') }}">{{ session.user_id }}'s details</a></li>
+      <li><a href="{{ url_for('search') }}">Search users</a></li>   
+    </ul>
+  </div>
+  {% endif %}
+  {% for message in get_flashed_messages() %}
+  <div class="flash">{{ message}}</div>
+  {% endfor %}
+  <div class="content-wrapper">
+    <div class="content">
+    {% block body %}{% endblock %}
+    </div>
+  </div>
+</body>
